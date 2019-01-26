@@ -14,7 +14,7 @@ node.js
 
 npm
 
-Once you have couchdb installed and running, create a database called 'dash'. This is accomplished with the following command line call. 
+Once you have couchdb installed and running, create a database called 'dash'. This is accomplished with the following command line call *Unix or Linux). 
 
 curl -X PUT http://127.0.0.1:5984/dash
 
