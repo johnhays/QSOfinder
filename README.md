@@ -23,6 +23,7 @@ Clone the software:
 git clone https://github.com/johnhays/QSOfinder.git
 
 cd QSOfinder
+npm install
 edit routes/index.js with your HamQTH credentials -- https://www.hamqth.com/developers.php and various titles, logo, etc.
 
 edit qsofinder.js to change port or IP address.  By default it listens on all interfaces for both IPv4 and IPv6 and port 8008.
