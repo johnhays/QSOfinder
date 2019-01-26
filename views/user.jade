@@ -1,0 +1,48 @@
+-var u = HamQTH.search[0]
+fieldset
+	if u
+		if _id
+			legend #{_id} #{u.nick} #{u.grid}
+		else
+			legend User Lookup
+		if u.picture
+			img.userimage(src='#{u.picture}')
+		.userdata
+			if _id
+				#usercall.callsign #{_id}
+				br
+			| #{u.adr_name}
+			br
+			if u.adr_street1
+				| #{u.adr_street1}
+				br
+			| #{u.adr_city}
+			if u.us_state
+				| , #{u.us_state}
+			if u.adr_zip
+				| &nbsp;#{u.adr_zip}
+			br
+			| #{u.country}
+			br
+			if u.email
+				| E-Mail: 
+				a(href='#{u.email}')
+					| #{u.email}
+				br
+			if u.jabber
+				| Jabber: #{u.jabber}
+				br
+			if u.skype
+				| Skype: #{u.skype}
+				br
+			if u.web
+				a(href='#{u.web}' target='#{_id}') #{u.web}
+				br
+			if mapURL
+				a(href='#{mapURL}' target='#{_id}') Map
+				br
+				br
+	else
+		legend _id
+		p User Not Found!
+	button.userclose(onclick="$('#userlookup').empty()") Close

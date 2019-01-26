@@ -1,0 +1,49 @@
+extends layout
+
+block content
+	.logo
+		img(src='/images/d-star-logo.png' title='D-STAR Logo')
+	h1= title
+	#status
+	#chat
+		#frequencies
+		fieldset.links
+			legend|Links
+			div
+				a(href='http://www.youtube.com/watch?v=oGF-qkdoid4' target='video')
+					| Video
+				br
+				a(href='https://github.com/dl5di/opendv' target='G4KLX')
+					| Software
+				br
+				br
+				a(href='http://k7ve.org' title='John Hays\' Blog' target='k7veblog')
+					| K7VE Blog
+				br
+				a(href='http://nwdigitalradio.com' title='NW Digtial Radio' target='nwdr')
+					| NW Digital
+				br
+				a(href='http://www.dstarinfo.com/DSTARHFNet.aspx' title='D-STAR HF Net' target='dstarinfo')
+					| HF Net Sked
+		fieldset
+			legend|Chat
+			#chatout.termout
+			input#chatin.termin(type="text")
+		fieldset
+			legend|Frequency Selector
+			| Your Frequency
+			input#freq(type="text")
+			button#freqset(type="button")|Update
+			button#freqclear(type="button")|Clear
+			#pretitle Presets
+			#freqselect 
+		#userlookup
+		fieldset
+			legend|Users Logged In
+			#users
+	#login
+		| Callsign 
+		input#call(type="text")
+		button#callenter(type="button")|Login
+	p Callsign data courtesy of 
+		a(href='http://hamqth.com' target='hamqth') HamQTH

@@ -1,0 +1,119 @@
+body { 
+	padding: 0px; 
+	font: 14px sans-serif; 
+
+} 
+.links {
+	float:right;
+}
+
+.logo {
+	top:10px;
+	right:10px;
+	position: absolute;
+}
+
+.logo img {
+	height: 3em;
+	right:1em;;
+}
+      
+a { 
+	color: #00B7FF; 
+} 
+        
+.navigation, .panel, .main { 
+	clear: both; 
+} 
+#frequencies {
+	float:left;
+	border: 1 solid black;
+	clear: left;
+}
+
+#usercall {
+	font-size: 16pt; 
+	font-weight: bold;
+}
+
+#chat {
+	width: 100%;
+	clear: both;
+}
+
+#status {
+	background: red;
+	color: white;
+	float: right;
+	padding: 0.25em;
+	border: 1px solid black;
+}
+
+.userdata
+{
+	float: left;
+}
+
+.userimage
+{
+	float:right;
+	clear:right;
+	height:auto;
+	max-height:150px;
+}
+
+.userclose
+{
+	clear:both;
+	float:right;
+}
+
+.timestamp {
+	font: 10px monospace italic;
+	background: black;
+	color: white;
+	padding: 0.25em;
+}
+
+.chatuser {
+	float : left;
+}
+
+.chatstring {
+}
+
+#users {
+	float: right;
+}
+
+button.callsign {
+	float: left;
+	margin: 1px;
+	width: 10em;
+}
+	    
+.termout { 
+	font: 14px monospace; 
+	height: 30em; 
+	width: 99%; 
+	padding: 5px; 
+	border: solid red 1px; 
+	background : black; 
+	color: lime; 
+	overflow: scroll; 
+} 
+
+.termin { 
+	font: 14px monospace; 
+	height: 2em; 
+	width: 99%; 
+	padding: 5px; 
+	border: solid green 1px; 
+	background: black; 
+	color: white; 
+} 
+
+#tabs-1 { background : cyan; } 
+#tabs-2 { background : white; } 
+#tabs-3 { background : white; }
+

@@ -1,0 +1,143 @@
+doctype html
+html
+	head
+		title= title
+		meta(charset='utf-8')
+		link(rel='stylesheet', href='http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css')
+		link(rel='stylesheet', href='/stylesheets/style.css')
+		script(src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js')
+		script(src='//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js')
+		script(src='socket.io/socket.io.js')
+		script.
+			var socket = io.connect(window.location.href);
+
+			socket.on('connect', function() {
+				$('#chat').hide();
+				$('#login').show();
+				$('#status').html('Connected');
+			})
+
+			socket.on('disconnect', function(err,data) {
+				$('#login').show();
+				$('#chat').hide();
+				$('#status').html('Disconnected');
+			})
+
+			socket.on('updatechat', function(username, data) {
+				$('#chatout').append( "<span class='timestamp'>" + new Date().toLocaleString() + "</span><br/><span class='chatuser'>" + username + "</span><span='chatstring'>: " + data + "<br/></span>\n"); 
+				$('#chatout').scrollTop($('#chatout')[0].scrollHeight);
+				$('#chatin').focus();
+				$('.callsign').mouseover(function() { lookupcall($(this).text());});
+			})
+
+			socket.on('updateusers', function(data) {
+				$('#users').empty();
+				$.each(data, function(key, value) {
+					$('#users').append('<button class="callbtn" onclick="lookupcall(\'' + key + '\')">' + key + '</button>');
+				});
+			})
+
+			socket.on('standardfreq', function(data) {
+				$('#freqselect').empty();
+				$.each(data, function(key, value) {
+					$('#freqselect').append('<button class="fbutton">' + value + '</button>');
+				});
+				$('.fbutton').click(function(){
+					socket.emit('stationfreq',$(this).text());
+				});
+			})
+
+			socket.on('freqlist', function(data) {
+				$('#frequencies').empty();
+				$('#frequencies').html(data);
+				$('.callsign').mouseover(function() { lookupcall($(this).text());});
+			})
+
+			socket.on('stationdata', function(data) {
+				$('#userlookup').empty();
+				$('#userlookup').append(data);
+			})
+
+			socket.on('callnotfound', function(data) {
+				$('#status').html("Unable to login: " + data);
+				$('#login').show();
+				$('#chat').hide();
+			})
+
+			socket.on('loggedin', function(data) {
+				$('#status').html("You are logged in.");
+				$('#login').hide();
+				$('#chat').show();
+			})
+
+			function validatelogin(call){
+				socket.emit('adduser',call);
+			}
+
+			function lookupcall(call) {
+				socket.emit('stationlookup',call);
+			}
+
+			$(function() {
+				$("#call").keyup(function(){
+					this.value = this.value.toUpperCase();
+				});
+				$('#freq').keypress(function(e) {
+					if(event.which < 46 || event.which > 59) {
+						event.preventDefault();
+					} // prevent if not number/dot
+
+					if(event.which == 46 && $(this).val().indexOf('.') != -1) {
+						event.preventDefault();
+					} // prevent if already dot
+					if (e.which == '13') {
+						e.preventDefault();
+						socket.emit('stationfreq',this.value);
+					}
+				});
+
+				$('#call').keypress(function(e) {
+					var regex = new RegExp("^[A-Za-z0-9]+$");
+					var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+					if (e.which == '13') {
+						e.preventDefault();
+						validatelogin(this.value);
+					}
+					if (regex.test(str)) {
+						return true;
+					}
+					e.preventDefault();
+					return false;
+				});
+
+				$('#chatin').keypress(function(e) {
+					if (e.which == '13') {
+						e.preventDefault();
+						socket.emit('sendchat', this.value);
+						$('#chatout').scrollTop($('#chatout')[0].scrollHeight);
+						this.value = '';
+					}
+				});
+
+
+
+				$("#freqclear").click(function(){
+					socket.emit('stationfreq','0.0000');
+					$('#freq').val('');
+				});
+
+				$("#freqset").click(function(){
+					socket.emit('stationfreq',$('#freq').val());
+					$('#freq').val('');
+				});
+
+				$("#callenter").click(function(){
+					validatelogin($('#call').val());
+				});
+
+				$('.callsign').mouseover(function() { lookupcall($(this).text());});
+				$("#call").focus();
+			})
+
+	body
+		block content
