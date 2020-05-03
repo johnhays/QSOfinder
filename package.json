@@ -1,13 +1,13 @@
 {
   "name": "qsofinder",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "main": "qsofinder.js",
   "scripts": {
     "start": "node qsofinder.js"
   },
   "dependencies": {
-    "express": "3.4.7",
+    "express": ">=3.11.0",
     "socket.io": "latest",
     "jade": "*",
     "cradle": "latest",
